@@ -1,0 +1,2 @@
+The "3_train_policy_mod.py" in this directory was tested with lerobot 0.4.1.
+To train with older versions of lerobot, please use the "3_train_policy_mod.py" in the "old" folder.

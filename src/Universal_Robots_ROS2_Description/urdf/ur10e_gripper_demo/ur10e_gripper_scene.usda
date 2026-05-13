@@ -1,0 +1,430 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (1.4838444295775266, 0.24470819321842086, 1.064942281936129)
+                double3 target = (-3.2206100867973833, -0.25730584139401336, -0.2544889472437457)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/World/ur10e/wrist_3_link/CameraJaw"
+        }
+        dictionary metricsAssembler = {
+            dictionary "/World/tableSim" = {
+            }
+            int version = 1
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./ur10e_gripper_scene.usda"
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    metersPerUnit = 1
+    subLayers = [
+        @../1_fixed.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "World"
+{
+    def Camera "CameraTop"
+    {
+        float2 clippingRange = (0.01, 100)
+        double focalLength = 35
+        double horizontalAperture = 20.955
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -7.813165051458141)
+        token projection = "perspective"
+        double verticalAperture = 15.2908
+        token visibility = "invisible"
+        float3 xformOp:rotateXYZ = (68.5353, -1.9083329e-14, 90)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (6.492944625360126, 0.05239305258239815, 3.2217484546414035)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+    }
+
+    over "ur10e"
+    {
+        string isaac:namespace (
+            displayName = "Namespace"
+            doc = "Namespace of the prim in Isaac Sim"
+        )
+
+        over "ee_link"
+        {
+        }
+
+        over "base_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "shoulder_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "upper_arm_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "forearm_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "wrist_1_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "wrist_2_link"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "wrist_3_link"
+        {
+            rel physics:simulationOwner
+
+            def Camera "CameraJaw"
+            {
+                float2 clippingRange = (0.01, 10)
+                double focalLength = 24
+                double horizontalAperture = 20.955
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -0.5236936755599936)
+                token projection = "perspective"
+                double verticalAperture = 15.2908
+                token visibility = "invisible"
+                float3 xformOp:rotateXYZ = (-121.16555, -0.01249339, 177.23022)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.020103163416909244, -0.4324487224017798, -0.09242068425264283)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "joints"
+        {
+            over "shoulder_pan_joint"
+            {
+                float drive:angular:physics:targetPosition = -0.5
+                float physics:lowerLimit = -360
+                float physics:upperLimit = 360
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "shoulder_lift_joint"
+            {
+                float drive:angular:physics:targetPosition = -72.200005
+                float physics:lowerLimit = -360
+                float physics:upperLimit = 360
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "elbow_joint"
+            {
+                float drive:angular:physics:targetPosition = 114.4
+                float physics:lowerLimit = -180
+                float physics:upperLimit = 180
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "wrist_1_joint"
+            {
+                float drive:angular:physics:targetPosition = -134.3
+                float physics:lowerLimit = -360
+                float physics:upperLimit = 360
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "wrist_2_joint"
+            {
+                float drive:angular:physics:targetPosition = -88.1
+                float physics:lowerLimit = -360
+                float physics:upperLimit = 360
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+
+            over "wrist_3_joint"
+            {
+                float drive:angular:physics:targetPosition = -172.5
+                float physics:lowerLimit = -360
+                float physics:upperLimit = 360
+                float state:angular:physics:position = 0
+                float state:angular:physics:velocity = 0
+            }
+        }
+
+        over "root_joint"
+        {
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    over "custom_gripper"
+    {
+        over "custom_gripper"
+        {
+            over "Base_Gripper"
+            {
+                rel physics:simulationOwner
+                quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+                double3 xformOp:translate = (0, 0, 0)
+                token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+            }
+
+            over "left_finger_1"
+            {
+                rel physics:simulationOwner
+                quatf xformOp:orient = (0.5, -0.5, -0.5, -0.5)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+                double3 xformOp:translate = (0.08776111395559091, 1.4857603504158615e-29, -0.1257908448222012)
+                token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+                over "PrismaticJoint1"
+                {
+                    float drive:linear:physics:targetPosition = 0
+                    float physics:lowerLimit = -0.0093
+                    float physics:upperLimit = 0
+                    float state:linear:physics:position = 0
+                }
+
+                over "left_finger_1"
+                {
+                    over "tn__finger_springstep_ZQ"
+                    {
+                        rel physics:simulationOwner
+                    }
+
+                    over "tn__smallpart_k9"
+                    {
+                        rel physics:simulationOwner
+                    }
+                }
+            }
+
+            over "left_finger_2"
+            {
+                rel physics:simulationOwner
+                quatf xformOp:orient = (0.5, 0.5, -0.5, 0.5)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+                double3 xformOp:translate = (0.01970458658653285, -1.730126039545229e-30, -0.12578999999999976)
+                token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+                over "PrismaticJoint2"
+                {
+                    float drive:linear:physics:targetPosition = 0
+                    float physics:lowerLimit = -0.0093
+                    float physics:upperLimit = 0
+                    float state:linear:physics:position = 0
+                }
+
+                over "left_finger_2"
+                {
+                    over "tn__finger_springstep_ZQ"
+                    {
+                        rel physics:simulationOwner
+                    }
+
+                    over "tn__smallpart_k9"
+                    {
+                        rel physics:simulationOwner
+                    }
+                }
+            }
+
+            over "right_finger_1"
+            {
+                rel physics:simulationOwner
+                quatf xformOp:orient = (0.5, -0.5, -0.5, -0.5)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+                double3 xformOp:translate = (-0.019924790424871178, -1.4321276696221708e-30, -0.12578999999999976)
+                token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+                over "PrismaticJoint3"
+                {
+                    float drive:linear:physics:targetPosition = 0
+                    float physics:lowerLimit = -0.0093
+                    float physics:upperLimit = 0
+                    float state:linear:physics:position = 0
+                }
+
+                over "right_finger_1"
+                {
+                    over "tn__finger_springstep_ZQ"
+                    {
+                        rel physics:simulationOwner
+                    }
+
+                    over "tn__smallpart_k9"
+                    {
+                        rel physics:simulationOwner
+                    }
+                }
+            }
+
+            over "right_finger_2"
+            {
+                rel physics:simulationOwner
+                quatf xformOp:orient = (0.5, 0.5, -0.5, 0.5)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+                double3 xformOp:translate = (-0.08812975341906845, 2.532453046937384e-30, -0.12578999999999976)
+                token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+                over "PrismaticJoint4"
+                {
+                    float drive:linear:physics:targetPosition = 0
+                    float physics:lowerLimit = -0.0093
+                    float physics:upperLimit = 0
+                    float state:linear:physics:position = 0
+                }
+
+                over "right_finger_2"
+                {
+                    over "tn__finger_springstep_ZQ"
+                    {
+                        rel physics:simulationOwner
+                    }
+
+                    over "tn__smallpart_k9"
+                    {
+                        rel physics:simulationOwner
+                    }
+                }
+            }
+        }
+    }
+
+    over "GroundPlane"
+    {
+        over "CollisionPlane"
+        {
+            rel physics:simulationOwner
+        }
+
+        over "CollisionMesh"
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def Camera "cameraSide1"
+    {
+        float2 clippingRange = (0.01, 10)
+        float focalLength = 24
+        float focusDistance = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -613585682270599.5)
+        token visibility = "invisible"
+        quatd xformOp:orient = (-0.3691065389298558, -0.24502962527900346, 0.41863234404722816, 0.7927596143676705)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.3077897303272366, 0.9869572530295115, 1.6881072919660187)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Camera "cameraSide2"
+    {
+        float2 clippingRange = (0.01, 10)
+        float focalLength = 24
+        float focusDistance = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -613585682270599.5)
+        token visibility = "invisible"
+        quatd xformOp:orient = (0.7907930418244581, 0.436607309507639, -0.1268565900669316, -0.40978998016436713)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.2340264073127514, -0.630109878975849, 1.821916799633502)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "simpleTable" (
+        prepend payload = @./simpleTable.usda@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.6858, 0.18291470182568043, 0.6205)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "tableSim"
+        {
+            rel physics:simulationOwner
+        }
+    }
+
+    def "objectblue" (
+        prepend payload = @./objectblue.usda@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.7, 0.3463486699934327, 0.6205000281333923)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "object1"
+        {
+            rel physics:simulationOwner
+        }
+    }
+
+    def "objectred" (
+        prepend payload = @./objectred.usda@
+    )
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.7, 0, 0.6205000281333923)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "object1"
+        {
+            rel physics:simulationOwner
+        }
+    }
+}
+
+over "Render"
+{
+    over "OmniverseKit"
+    {
+        over "HydraTextures"
+        {
+            over "omni_kit_widget_viewport_ViewportTexture_0"
+            {
+                rel camera = </World/ur10e/wrist_3_link/CameraJaw>
+                bool omni:rtx:rt:ecoMode:enabled
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+        }
+    }
+}
+

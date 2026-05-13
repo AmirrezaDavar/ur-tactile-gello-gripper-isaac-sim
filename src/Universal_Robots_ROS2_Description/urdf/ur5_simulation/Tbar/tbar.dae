@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2025-03-20T08:57:26</created>
+    <modified>2025-03-20T08:57:26</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="Material_001-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.1804668 0 0.02094138 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="Material_001-material" name="Material.001">
+      <instance_effect url="#Material_001-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="tbar-mesh" name="tbar">
+      <mesh>
+        <source id="tbar-mesh-positions">
+          <float_array id="tbar-mesh-positions-array" count="48">75 12 0 75 -12 0 75 12 -30 75 -12 -30 15 12 0 15 -12 0 15 12 120 15 -12 120 -15 12 120 -15 -12 120 -75 12 -30 -75 -12 -30 -75 -12 0 -15 -12 0 -75 12 0 -15 12 0</float_array>
+          <technique_common>
+            <accessor source="#tbar-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="tbar-mesh-normals">
+          <float_array id="tbar-mesh-normals-array" count="84">1 0 0 1 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 0 1 0 0 1 0 0 -1 0 0 -1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#tbar-mesh-normals-array" count="28" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="tbar-mesh-vertices">
+          <input semantic="POSITION" source="#tbar-mesh-positions"/>
+        </vertices>
+        <triangles material="Material_001-material" count="28">
+          <input semantic="VERTEX" source="#tbar-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#tbar-mesh-normals" offset="1"/>
+          <p>0 0 1 0 2 0 2 1 1 1 3 1 4 2 5 2 0 2 0 3 5 3 1 3 6 4 7 4 4 4 4 5 7 5 5 5 8 6 9 6 6 6 6 7 9 7 7 7 10 8 2 8 11 8 11 9 2 9 3 9 3 10 1 10 11 10 11 11 1 11 5 11 12 12 11 12 13 12 13 13 11 13 5 13 13 14 5 14 9 14 9 15 5 15 7 15 10 16 14 16 2 16 2 17 14 17 15 17 0 18 2 18 4 18 4 19 2 19 15 19 4 20 15 20 6 20 6 21 15 21 8 21 10 22 11 22 14 22 14 23 11 23 12 23 15 24 13 24 8 24 8 25 13 25 9 25 14 26 12 26 15 26 15 27 12 27 13 27</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="tbar" name="tbar" type="NODE">
+        <matrix sid="transform">0.001 0 0 0 0 0.001 0 0 0 0 0.001 0 0 0 0 1</matrix>
+        <instance_geometry url="#tbar-mesh" name="tbar">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material_001-material" target="#Material_001-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

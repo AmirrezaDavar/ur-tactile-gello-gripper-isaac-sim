@@ -1,0 +1,745 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, -0.011819090895085803, -0.12435984457332176)
+                double radius = 0.05727454423904419
+            }
+            dictionary Perspective = {
+                double3 position = (-0.07388025086319432, 0.19545106822521732, -0.06500424193699152)
+                double3 target = (0.06697241052036236, -0.17903139981493318, -0.2373403733934129)
+            }
+            dictionary Right = {
+                double3 position = (0.017421422030853128, -5, -0.07652638832137458)
+                double radius = 0.480070972442627
+            }
+            dictionary Top = {
+                double3 position = (0, 0, 5)
+                double radius = 5
+            }
+            string boundCamera = "/OmniverseKit_Persp"
+        }
+        dictionary metricsAssembler = {
+            dictionary "/World/Base_Gripper" = {
+            }
+            dictionary "/World/left_finger_1" = {
+            }
+            dictionary "/World/left_finger_2" = {
+            }
+            dictionary "/World/right_finger_1" = {
+            }
+            dictionary "/World/right_finger_2" = {
+            }
+            int version = 1
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./USDAAA4.usda"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "custom_gripper" (
+        delete apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
+    )
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def "Base_Gripper" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "MaterialBindingAPI"]
+            displayName = "Base_Gripper"
+            prepend payload = @./custom_gripper/custom_gripper_for_isaac_sim/Base_Gripper.usd@
+        )
+        {
+            rel material:binding = </World/custom_gripper/Base_Gripper/OmniSurface> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            bool physics:kinematicEnabled = 0
+            bool physics:rigidBodyEnabled = 1
+            bool physxRigidBody:disableGravity = 0
+            quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+            over "Prototypes"
+            {
+                over "tn__gripper_basestep_oO"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI", "MaterialBindingAPI"]
+                        )
+                        {
+                            rel material:binding = </World/custom_gripper/Base_Gripper/OmniSurface> (
+                                bindMaterialAs = "weakerThanDescendants"
+                            )
+                            uniform token physics:approximation = "convexHull"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+
+                over "tn__jawWOsmallPartstep_pR"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexHull"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+            }
+
+            def PhysicsFixedJoint "FixedJoint"
+            {
+                rel physics:body1 = </World/custom_gripper/Base_Gripper>
+                float physics:breakForce = 3.4028235e38
+                float physics:breakTorque = 3.4028235e38
+                point3f physics:localPos0 = (0, 0, 0)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0.70710677, 0.70710677, 0, 0)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+            }
+
+            over "Looks"
+            {
+                over "Diffuse"
+                {
+                    over "PreviewSurface"
+                    {
+                        color3f inputs:diffuseColor = (0.10038608, 0.081781715, 0.081781715)
+                        color3f inputs:emissiveColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:specularColor = (0, 0, 0)
+                    }
+                }
+            }
+        }
+
+        def "left_finger_1" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+            displayName = "left_finger_1"
+            prepend payload = @./custom_gripper/custom_gripper_for_isaac_sim/left_finger_1.usd@
+        )
+        {
+            bool physics:kinematicEnabled = 0
+            bool physics:rigidBodyEnabled = 1
+            bool physxRigidBody:disableGravity = 0
+            quatf xformOp:orient = (0.5, -0.5, -0.5, -0.5)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+            double3 xformOp:translate = (0.087761113955591, 1.4857603504158632e-29, -0.12579084482220138)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+            over "Prototypes"
+            {
+                over "tn__finger_springstep_ZQ"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+
+                over "tn__smallpart_k9"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI", "PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                            bool physics:kinematicEnabled = 0
+                            bool physics:rigidBodyEnabled = 1
+                        }
+                    }
+                }
+            }
+
+            over "left_finger_1"
+            {
+                matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+
+                over "tn__finger_springstep_ZQ" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+
+                over "tn__smallpart_k9" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+            }
+
+            def PhysicsPrismaticJoint "PrismaticJoint1" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 120
+                float drive:linear:physics:maxForce = 35
+                float drive:linear:physics:stiffness = 2500
+                float drive:linear:physics:targetPosition = -0.01
+                float drive:linear:physics:targetVelocity = 0
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/custom_gripper/Base_Gripper>
+                rel physics:body1 = </World/custom_gripper/left_finger_1>
+                float physics:breakForce = 3.4028235e38
+                float physics:breakTorque = 3.4028235e38
+                point3f physics:localPos0 = (87.76111, -125.79085, 0.0000043056375)
+                point3f physics:localPos1 = (0, -1.4210855e-14, -1.2621775e-29)
+                quatf physics:localRot0 = (1.2101617e-8, 0.70710677, 0.70710677, -1.2101617e-8)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = -0.0093
+                float physics:upperLimit = 0
+            }
+
+            over "Looks"
+            {
+                over "Diffuse"
+                {
+                    over "PreviewSurface"
+                    {
+                        color3f inputs:diffuseColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:emissiveColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:specularColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                    }
+
+                    def Material "OmniSurface"
+                    {
+                        token outputs:mdl:displacement.connect = </World/custom_gripper/left_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/custom_gripper/left_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/custom_gripper/left_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                            token outputs:out (
+                                renderType = "material"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        def "left_finger_2" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+            displayName = "left_finger_2"
+            prepend payload = @./custom_gripper/custom_gripper_for_isaac_sim/left_finger_2.usd@
+        )
+        {
+            bool physics:kinematicEnabled = 0
+            bool physics:rigidBodyEnabled = 1
+            bool physxRigidBody:disableGravity = 0
+            quatf xformOp:orient = (0.5, 0.5, -0.5, 0.5)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+            double3 xformOp:translate = (0.01970458658653287, -1.7301260395452312e-30, -0.12578999999999993)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+            over "Prototypes"
+            {
+                over "tn__finger_springstep_ZQ"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+
+                over "tn__smallpart_k9"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+            }
+
+            def PhysicsPrismaticJoint "PrismaticJoint2" (
+                delete apiSchemas = ["PhysxMimicJointAPI:rotX"]
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 120
+                float drive:linear:physics:maxForce = 35
+                float drive:linear:physics:stiffness = 2500
+                float drive:linear:physics:targetPosition = -0.01
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/custom_gripper/Base_Gripper>
+                rel physics:body1 = </World/custom_gripper/left_finger_2>
+                float physics:breakForce = 3.4028235e38
+                float physics:breakTorque = 3.4028235e38
+                point3f physics:localPos0 = (19.704586, -125.79, 0.0000043056084)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0.70710677, -1.2101617e-8, 1.2101617e-8, 0.70710677)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = -0.0093
+                float physics:upperLimit = 0
+            }
+
+            over "left_finger_2"
+            {
+                matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1) )
+
+                over "tn__finger_springstep_ZQ" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+
+                over "tn__smallpart_k9" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+            }
+
+            over "Looks"
+            {
+                over "Diffuse"
+                {
+                    over "PreviewSurface"
+                    {
+                        color3f inputs:diffuseColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:emissiveColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                    }
+
+                    def Material "OmniSurface"
+                    {
+                        token outputs:mdl:displacement.connect = </World/custom_gripper/left_finger_2/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/custom_gripper/left_finger_2/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/custom_gripper/left_finger_2/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                            token outputs:out (
+                                renderType = "material"
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        def "right_finger_1" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI"]
+            displayName = "right_finger_1"
+            prepend payload = @./custom_gripper/custom_gripper_for_isaac_sim/right_finger_1.usd@
+        )
+        {
+            bool physics:kinematicEnabled = 0
+            bool physics:rigidBodyEnabled = 1
+            bool physxRigidBody:disableGravity = 0
+            bool physxRigidBody:enableGyroscopicForces = 1
+            quatf xformOp:orient = (0.5, -0.5, -0.5, -0.5)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+            double3 xformOp:translate = (-0.0199247904248712, -1.4321276696221719e-30, -0.12578999999999993)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+            over "Prototypes"
+            {
+                over "tn__finger_springstep_ZQ"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+
+                over "tn__smallpart_k9"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+            }
+
+            def PhysicsPrismaticJoint "PrismaticJoint3" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 120
+                float drive:linear:physics:maxForce = 35
+                float drive:linear:physics:stiffness = 2500
+                float drive:linear:physics:targetPosition = -0.01
+                float drive:linear:physics:targetVelocity = 0
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/custom_gripper/Base_Gripper>
+                rel physics:body1 = </World/custom_gripper/right_finger_1>
+                float physics:breakForce = 3.4028235e38
+                float physics:breakTorque = 3.4028235e38
+                point3f physics:localPos0 = (-19.92479, -125.79, 0.0000043056084)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (1.2101617e-8, 0.70710677, 0.70710677, -1.2101617e-8)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = -0.0093
+                float physics:upperLimit = 0
+            }
+
+            over "Looks"
+            {
+                over "Diffuse"
+                {
+                    over "PreviewSurface"
+                    {
+                        color3f inputs:diffuseColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                    }
+
+                    def Material "OmniSurface"
+                    {
+                        token outputs:mdl:displacement.connect = </World/custom_gripper/right_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:surface.connect = </World/custom_gripper/right_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+                        token outputs:mdl:volume.connect = </World/custom_gripper/right_finger_1/Looks/Diffuse/OmniSurface/Shader.outputs:out>
+
+                        def Shader "Shader"
+                        {
+                            uniform token info:implementationSource = "sourceAsset"
+                            uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                            uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                            color3f inputs:diffuse_reflection_color = (0.000001, 9.9999e-7, 9.9999e-7)
+                            token outputs:out (
+                                renderType = "material"
+                            )
+                        }
+                    }
+                }
+            }
+
+            over "right_finger_1"
+            {
+                over "tn__finger_springstep_ZQ" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+
+                over "tn__smallpart_k9" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+            }
+        }
+
+        def "right_finger_2" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "MaterialBindingAPI"]
+            displayName = "right_finger_2"
+            prepend payload = @./custom_gripper/custom_gripper_for_isaac_sim/right_finger_2.usd@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            bool physics:kinematicEnabled = 0
+            bool physics:rigidBodyEnabled = 1
+            bool physxRigidBody:disableGravity = 0
+            quatf xformOp:orient = (0.5, 0.5, -0.5, 0.5)
+            float3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:scale:unitsResolve = (0.001, 0.001, 0.001)
+            double3 xformOp:translate = (-0.08812975341906853, 2.532453046937386e-30, -0.12578999999999993)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale", "xformOp:scale:unitsResolve"]
+
+            over "Prototypes"
+            {
+                over "tn__finger_springstep_ZQ"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+
+                over "tn__smallpart_k9"
+                {
+                    over "NONE"
+                    {
+                        over "Mesh" (
+                            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysicsMeshCollisionAPI"]
+                        )
+                        {
+                            uniform token physics:approximation = "convexDecomposition"
+                            bool physics:collisionEnabled = 1
+                        }
+                    }
+                }
+            }
+
+            over "Looks"
+            {
+                over "Diffuse"
+                {
+                    over "PreviewSurface"
+                    {
+                        color3f inputs:diffuseColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:emissiveColor = (0.000001, 9.9999e-7, 9.9999e-7)
+                        color3f inputs:specularColor = (0.000001, 9.9999e-7, 9.9999e-7)
+
+                        def Material "OmniSurface"
+                        {
+                            token outputs:mdl:displacement.connect = </World/custom_gripper/right_finger_2/Looks/Diffuse/PreviewSurface/OmniSurface/Shader.outputs:out>
+                            token outputs:mdl:surface.connect = </World/custom_gripper/right_finger_2/Looks/Diffuse/PreviewSurface/OmniSurface/Shader.outputs:out>
+                            token outputs:mdl:volume.connect = </World/custom_gripper/right_finger_2/Looks/Diffuse/PreviewSurface/OmniSurface/Shader.outputs:out>
+
+                            def Shader "Shader"
+                            {
+                                uniform token info:implementationSource = "sourceAsset"
+                                uniform asset info:mdl:sourceAsset = @OmniSurface.mdl@
+                                uniform token info:mdl:sourceAsset:subIdentifier = "OmniSurface"
+                                token outputs:out (
+                                    renderType = "material"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            over "right_finger_2"
+            {
+                over "tn__finger_springstep_ZQ" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+
+                over "tn__smallpart_k9" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+                )
+                {
+                    uniform token physics:approximation = "convexDecomposition"
+                    bool physics:collisionEnabled = 1
+                }
+            }
+
+            def PhysicsPrismaticJoint "PrismaticJoint4" (
+                prepend apiSchemas = ["PhysicsDriveAPI:linear"]
+            )
+            {
+                float drive:linear:physics:damping = 120
+                float drive:linear:physics:maxForce = 35
+                float drive:linear:physics:stiffness = 2500
+                float drive:linear:physics:targetPosition = -0.01
+                uniform token physics:axis = "Y"
+                rel physics:body0 = </World/custom_gripper/Base_Gripper>
+                rel physics:body1 = </World/custom_gripper/right_finger_2>
+                float physics:breakForce = 3.4028235e38
+                float physics:breakTorque = 3.4028235e38
+                point3f physics:localPos0 = (-88.12975, -125.79, 0.0000043056084)
+                point3f physics:localPos1 = (0, 0, 0)
+                quatf physics:localRot0 = (0.70710677, -1.2101617e-8, 1.2101617e-8, 0.70710677)
+                quatf physics:localRot1 = (1, 0, 0, 0)
+                float physics:lowerLimit = -0.0093
+                float physics:upperLimit = 0
+            }
+        }
+    }
+
+    def Scope "Looks"
+    {
+    }
+
+    def Xform "GroundPlane"
+    {
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, -0.21354088870514337)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Mesh "CollisionMesh" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform bool doubleSided = 0
+            int[] faceVertexCounts = [4]
+            int[] faceVertexIndices = [0, 1, 2, 3]
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)]
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-25, -25, 0), (25, -25, 0), (25, 25, 0), (-25, 25, 0)]
+            color3f[] primvars:displayColor = [(0.5, 0.5, 0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                interpolation = "varying"
+            )
+        }
+
+        def Plane "CollisionPlane" (
+            prepend apiSchemas = ["PhysicsCollisionAPI"]
+        )
+        {
+            uniform token axis = "Z"
+            uniform token purpose = "guide"
+        }
+    }
+}
+
+def Xform "Environment"
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def DistantLight "defaultLight" (
+        prepend apiSchemas = ["ShapingAPI"]
+    )
+    {
+        float inputs:angle = 1
+        float inputs:intensity = 3000
+        float inputs:shaping:cone:angle = 180
+        float inputs:shaping:cone:softness
+        float inputs:shaping:focus
+        color3f inputs:shaping:focusTint
+        asset inputs:shaping:ies:file
+        quatd xformOp:orient = (0.6532814824381883, 0.2705980500730985, 0.27059805007309845, 0.6532814824381882)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Persp>
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:material:db:nonVisualMaterialCSV:enabled = 0
+                token omni:rtx:post:dlss:execMode = "performance"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:lightcache:cached:dontResolveConflicts = 1
+                int omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                int omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                bool omni:rtx:scene:useViewLightingMode
+                uint omni:rtx:viewTile:limit = 4294967295
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+        }
+    }
+}
+
